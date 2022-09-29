@@ -1,3 +1,6 @@
+import * as dotEnv from "dotenv";
+dotEnv.config();
+
 import app from "./server";
 
 app.listen(5000, () => {
