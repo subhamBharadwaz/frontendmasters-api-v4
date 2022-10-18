@@ -1,6 +1,15 @@
-import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import { IReqUser, IUser } from "../interfaces/user";
+
+export const comparePasswords = (password: string, hash: string) => {
+  return bcrypt.compare(password, hash);
+};
+
+export const hashPassword = (password: string) => {
+  return bcrypt.hash(password, 10);
+};
 
 export const createJwt = (user: IUser) => {
   const token = jwt.sign(
