@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { IReqUser, IUser } from "../interfaces/user";
+import { IReqUserJwt, IUser } from "../interfaces/user";
 
 export const comparePasswords = (password: string, hash: string) => {
   return bcrypt.compare(password, hash);
@@ -19,7 +19,11 @@ export const createJwt = (user: IUser) => {
   return token;
 };
 
-export const protect = (req: IReqUser, res: Response, next: NextFunction) => {
+export const protect = (
+  req: IReqUserJwt,
+  res: Response,
+  next: NextFunction
+) => {
   const bearer = req.headers.authorization;
 
   if (!bearer) {
