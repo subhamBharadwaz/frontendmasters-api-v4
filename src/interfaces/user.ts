@@ -7,5 +7,9 @@ export interface IUser {
 }
 
 export interface IReqUser extends Request {
+  user?: any;
+}
+
+export interface IReqUserJwt extends Request {
   user?: string | JwtPayload;
 }
