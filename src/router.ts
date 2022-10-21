@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import { body } from "express-validator";
 import {
   createProduct,
@@ -101,4 +101,8 @@ router.put(
 
 router.delete("/updatepoint/:id", (req: Request, res: Response) => {});
 
+router.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  console.log(err);
+  res.json({ message: "Router handler" });
+});
 export default router;

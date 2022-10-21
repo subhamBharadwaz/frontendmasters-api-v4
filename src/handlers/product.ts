@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import prisma from "../db";
 import { IReqUser } from "../interfaces/user";
 
@@ -33,15 +33,23 @@ export const getOneProduct = async (req: IReqUser, res: Response) => {
 };
 
 // Create product
-export const createProduct = async (req: IReqUser, res: Response) => {
-  const product = await prisma.product.create({
-    data: {
-      name: req.body.name,
-      belongsToId: req.user.id,
-    },
-  });
+export const createProduct = async (
+  req: IReqUser,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const product = await prisma.product.create({
+      data: {
+        name: req.body.name,
+        belongsToId: req.user.id,
+      },
+    });
 
-  res.status(201).json({ data: product });
+    res.status(201).json({ data: product });
+  } catch (err) {
+    next(err);
+  }
 };
 
 // Update product

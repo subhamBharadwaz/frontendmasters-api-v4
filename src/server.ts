@@ -12,15 +12,25 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req: Request, res: Response) => {
-  console.log("hello from express");
-  res.status(200);
-  res.json({ message: "hello" });
+app.get("/", (req: Request, res: Response, next: NextFunction) => {
+  setTimeout(() => {
+    next(new Error("hello"));
+  }, 1);
 });
 
 app.use("/api", protect, router);
 
 app.post("/user", createNewUser);
 app.post("/signin", signIn);
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  if (err.type === "auth") {
+    res.status(401).json({ message: "Unauthorized!" });
+  } else if (err.type === "input") {
+    res.status(400).json({ message: "Invalid input!" });
+  } else {
+    res.status(500).json({ message: `Oops that's on us!` });
+  }
+});
 
 export default app;
