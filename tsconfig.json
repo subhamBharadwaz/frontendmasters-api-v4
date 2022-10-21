@@ -3,8 +3,11 @@
     "sourceMap": true,
     "outDir": "dist",
     "strict": true,
+    "rootDir": "./src",
     "lib": ["esnext"],
     "esModuleInterop": true,
-    "allowJs": true
-  }
+    "allowJs": true,
+    "declaration": true
+  },
+  "include": ["src/**/*.ts"]
 }
